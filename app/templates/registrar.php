@@ -27,12 +27,15 @@
         <h1>Registro</h1>
       </div>
 
-      <form name="fregistro" action="index.php?ctl=registrar" method="POST">
+      <form name="fregistro" action="index.php?ctl=registrar" method="POST" enctype="multipart/form-data">
         <div class="input-form">
           <input type="text" class="form-control" name="usuario" placeholder="Usuario" value="<?php echo $params['usuario'] ?>" />
         </div>
         <div class="input-form">
           <input type="password"  class="form-control" name="password" placeholder="Contraseña" value="<?php echo $params['password'] ?>" />
+        </div>
+        <div class="input-form">
+          <input type="file"  class="form-control" name="fotoPerfil" />
         </div>
         <input type="submit" class="btn-login w-100" value="Registrarme" name="registro">
       </form>

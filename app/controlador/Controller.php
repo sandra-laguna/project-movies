@@ -40,17 +40,25 @@ class Controller
                     $error = true;
                     $params ['mensaje'] = "Los datos introducidos en el campo password no son validos"; 
                 };
+
+                if (!$fotoPerfil = chkFile("fotoPerfil", $params, true) ){
+                    $error = true;
+                    $params ['mensaje'] = "La imagen no es valida";
+                }
+
+
                 
                 if(!$error){       
                     $params = array (
                         'usuario' => $usuario,
                         'password' => $password
                    );
-                    
+                    print_r($_FILES);
                     
                     // despues de validar creo objeto para insertar el nuevo usuario
                     $nU = new Usuarios();
-                    if($nU->registrarUsuario($params)){  
+                    if($nU->registrarUsuario($params, $fotoPerfil)){
+                        
                         $params ['mensajeok'] = "Registro realizado correctamente, ya puedes iniciar sesion, $usuario"; 
                        //$_SESSION['mensajeok'] = "Registro realizado correctamente, ya puedes iniciar sesion, $usuario";
                         //header('Location: index.php?ctl=login');
@@ -101,16 +109,20 @@ class Controller
                 //Si no hay errores de validacion creo objeto y realizo consulta
                 if(!$error){                     
                     $u = new Usuarios();
-                    $datosUsuario = $u->login($usuario, $password);               
+                    $datosUsuario = $u->login($usuario, $password);     
                     
                     if(!is_array($datosUsuario)){ 
                         $params ['mensaje'] = "Usuario y/o contraseña incorrectos";
                     }else{
-                        print_r($datosUsuario);
+                        // print_r($datosUsuario);
                 
                         if(($datosUsuario['usuario']== $usuario) && ($datosUsuario['password'] == $password)){
                             $_SESSION['datos'] = $datosUsuario;                
                             $_SESSION['menu'] = 'menu.php';
+                            $_SESSION['test'] = $u->buscarImgPerfil($datosUsuario['id']);
+                            // $_SESSION['imgPerfil'] = decodeImg($_SESSION['test']);
+                            // print_r($_SESSION['imgPerfil']);
+                            
                             
                             header('Location: index.php?ctl=inicio');
                             
@@ -119,7 +131,7 @@ class Controller
                                 'usuario' => $usuario,
                                 'password' => $password, 
                             );
-                        $params['mensaje'] = 'Error al iniciar sesión, los datos que no son correctos.';   
+                        $params['mensaje'] = 'Error al iniciar sesión, los datos introducidos no son correctos.';   
                         }
                     }
                 }
@@ -145,7 +157,7 @@ class Controller
         unset($_SESSION);
         require __DIR__ . '/../templates/inicio.php';
     }
- 
+    
 }
 
 ?>

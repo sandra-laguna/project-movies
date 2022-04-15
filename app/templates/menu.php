@@ -31,8 +31,8 @@
               <img src="../web/imagenes/search.svg" height="18px"/>
             </a>
         </li>
-        <li class="usuario">
-            <img src="../web/imagenes/user.png" height="40px"/>
+        <li class="usuario">  
+            <img class="imgPerfil" src="data:image/;base64,<?php echo "". base64_encode($_SESSION ['datos']['imgperfil'])?>"/>
             <div class="dropdown-content">
                 <span class="navbar-element"><?php echo $_SESSION['datos']['usuario'] ?></span>
                 <a class="navbar-element" href="index.php?ctl=logout">Log out</a>
@@ -43,3 +43,4 @@
 		<?php endif; ?>
     
 </nav>
+

@@ -70,7 +70,7 @@ address {
   width: 40px;
   height: 40px;
   padding: 6px 0px;
-  border-radius: 20px;
+  border-radius: 50%;
   text-align: center;
   font-size: 12px;
   line-height: 1.42857;
@@ -88,6 +88,12 @@ address {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
+.imgPerfil {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
 
 nav {
   display: flex !important;
